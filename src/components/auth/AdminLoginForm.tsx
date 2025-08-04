@@ -5,7 +5,6 @@ import { signInWithPhoneNumber, ConfirmationResult } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Label } from '../ui/label';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '../ui/input-otp';
 import { auth, createRecaptchaVerifier } from '../../config/firebase.config';
@@ -138,102 +137,136 @@ export default function AdminLoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">
-            Admin Login
-          </CardTitle>
-          <CardDescription className="text-center">
-            {step === 'phone' 
-              ? 'Enter your authorized phone number to continue'
-              : 'Enter the OTP sent to your phone'
-            }
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {step === 'phone' ? (
-            <>
-              <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number</Label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                    +91
-                  </span>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    placeholder="Enter 10-digit mobile number"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    className="pl-12"
-                    maxLength={10}
-                  />
-                </div>
-              </div>
+    <div className="min-h-screen flex items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md">
+        {/* Logo/Brand Section */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-black rounded-lg mb-6">
+            <svg
+              className="w-6 h-6 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+              />
+            </svg>
+          </div>
+          <h1 className="text-2xl font-medium text-gray-900">RevoBricks</h1>
+          <p className="text-gray-500 text-sm mt-1">Enterprise Console</p>
+        </div>
 
-              <Button 
-                onClick={handleSendOtp} 
-                disabled={loading || !phoneNumber.trim()}
-                className="w-full"
-              >
-                {loading ? 'Sending OTP...' : 'Send OTP'}
-              </Button>
-            </>
-          ) : (
-            <>
-              <div className="space-y-2">
-                <Label htmlFor="otp">Enter OTP</Label>
-                <div className="flex justify-center">
-                  <InputOTP
-                    value={otp}
-                    onChange={setOtp}
-                    maxLength={6}
+        {/* Login Form */}
+        <div className="bg-white border border-gray-200 rounded-lg p-8">
+          <div className="mb-8">
+            <h2 className="text-xl font-medium text-gray-900 mb-2">
+              Admin Login
+            </h2>
+            <p className="text-gray-500 text-sm">
+              {step === 'phone' 
+                ? 'Enter your authorized phone number to continue'
+                : 'Enter the OTP sent to your phone'
+              }
+            </p>
+          </div>
+          <div className="space-y-6">
+            {step === 'phone' ? (
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="phone" className="text-sm font-medium text-gray-700">
+                    Phone Number
+                  </Label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
+                      +91
+                    </span>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="Enter 10-digit mobile number"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      className="pl-12 h-11 border-gray-300 focus:border-gray-900 focus:ring-gray-900"
+                      maxLength={10}
+                    />
+                  </div>
+                </div>
+
+                <Button 
+                  onClick={handleSendOtp} 
+                  disabled={loading || !phoneNumber.trim()}
+                  className="w-full h-11 bg-gray-900 hover:bg-gray-800 text-white font-medium"
+                >
+                  {loading ? 'Sending OTP...' : 'Send OTP'}
+                </Button>
+              </>
+            ) : (
+              <>
+                <div className="space-y-4">
+                  <Label htmlFor="otp" className="text-sm font-medium text-gray-700">
+                    Enter OTP
+                  </Label>
+                  <div className="flex justify-center">
+                    <InputOTP
+                      value={otp}
+                      onChange={setOtp}
+                      maxLength={6}
+                    >
+                      <InputOTPGroup>
+                        <InputOTPSlot index={0} />
+                        <InputOTPSlot index={1} />
+                        <InputOTPSlot index={2} />
+                        <InputOTPSlot index={3} />
+                        <InputOTPSlot index={4} />
+                        <InputOTPSlot index={5} />
+                      </InputOTPGroup>
+                    </InputOTP>
+                  </div>
+                  <p className="text-sm text-gray-500 text-center">
+                    OTP sent to +91 {phoneNumber}
+                  </p>
+                </div>
+
+                <div className="flex space-x-3">
+                  <Button 
+                    variant="outline" 
+                    onClick={handleBack}
+                    className="flex-1 h-11 border-gray-300 text-gray-700 hover:bg-gray-50"
                   >
-                    <InputOTPGroup>
-                      <InputOTPSlot index={0} />
-                      <InputOTPSlot index={1} />
-                      <InputOTPSlot index={2} />
-                      <InputOTPSlot index={3} />
-                      <InputOTPSlot index={4} />
-                      <InputOTPSlot index={5} />
-                    </InputOTPGroup>
-                  </InputOTP>
+                    Back
+                  </Button>
+                  <Button 
+                    onClick={handleVerifyOtp} 
+                    disabled={loading || otp.length !== 6}
+                    className="flex-1 h-11 bg-gray-900 hover:bg-gray-800 text-white font-medium"
+                  >
+                    {loading || isLoading ? 'Verifying...' : 'Verify OTP'}
+                  </Button>
                 </div>
-                <p className="text-sm text-gray-600 text-center">
-                  OTP sent to +91 {phoneNumber}
-                </p>
+              </>
+            )}
+
+            {error && (
+              <div className="text-red-600 text-sm text-center bg-red-50 border border-red-200 p-3 rounded-md">
+                {error}
               </div>
+            )}
 
-              <div className="flex space-x-3">
-                <Button 
-                  variant="outline" 
-                  onClick={handleBack}
-                  className="flex-1"
-                >
-                  Back
-                </Button>
-                <Button 
-                  onClick={handleVerifyOtp} 
-                  disabled={loading || otp.length !== 6}
-                  className="flex-1"
-                >
-                  {loading || isLoading ? 'Verifying...' : 'Verify OTP'}
-                </Button>
-              </div>
-            </>
-          )}
+            {/* Recaptcha container */}
+            <div id="recaptcha-container"></div>
+          </div>
+        </div>
 
-          {error && (
-            <div className="text-red-600 text-sm text-center bg-red-50 p-3 rounded-md">
-              {error}
-            </div>
-          )}
-
-          {/* Recaptcha container */}
-          <div id="recaptcha-container"></div>
-        </CardContent>
-      </Card>
+        {/* Footer */}
+        <div className="text-center mt-8 text-xs text-gray-400">
+          <p>Protected by advanced security measures</p>
+          <p className="mt-1">© 2024 RevoBricks. All rights reserved.</p>
+        </div>
+      </div>
     </div>
   );
 }

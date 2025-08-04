@@ -61,20 +61,17 @@ export default function DashboardOverview() {
         // Fetch developers
         await dispatch(fetchDevelopers()).unwrap();
         
-        // Fetch users and projects data - only if endpoints exist
-        const [usersResponse, projectsResponse] = await Promise.all([
-          ApiManager.getAllUsers().catch((error) => {
-            console.log('Users endpoint failed:', error.message);
-            return [];
-          }),
-          ApiManager.getAllProjects().catch((error) => {
-            console.log('Projects endpoint failed:', error.message);
-            return [];
-          }),
-        ]);
+        // Fetch users data
+        const usersResponse = await ApiManager.getAllUsers().catch((error) => {
+          console.log('Users endpoint failed:', error.message);
+          return [];
+        });
 
         const totalUsers = Array.isArray(usersResponse) ? usersResponse.length : 0;
-        const totalProjects = Array.isArray(projectsResponse) ? projectsResponse.length : 0;
+        
+        // Projects endpoint requires employee authentication, not user authentication
+        // So we'll set it to 0 for now since we're logged in as a user
+        const totalProjects = 0;
 
         setStats({
           totalDevelopers: developers.length,
