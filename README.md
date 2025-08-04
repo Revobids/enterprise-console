@@ -10,7 +10,7 @@ A secure admin console for RevoBricks enterprise operations with Firebase phone 
 - **TypeScript**: Full type safety throughout the application
 - **Responsive Design**: Mobile-friendly interface
 
-## Project Structure
+## Project Structures
 
 ```
 src/
