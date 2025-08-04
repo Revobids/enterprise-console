@@ -2,7 +2,7 @@
 const isDev = process.env.NODE_ENV === 'development';
 export const BASE_URL = isDev 
   ? 'http://localhost:3000/api'
-  : 'https://revobricks-backend-core.onrender.com/';
+  : 'https://revobricks-backend-core.onrender.com/api';
 
 // Admin Authentication Endpoints
 export const adminEndpoints = {
