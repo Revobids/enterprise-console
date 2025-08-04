@@ -6,8 +6,6 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "export": "next build && next export",
-    "serve": "npx serve out",
     "lint": "next lint"
   },
   "dependencies": {
