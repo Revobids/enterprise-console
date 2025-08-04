@@ -1,36 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RevoBricks Enterprise Console
+
+A secure admin console for RevoBricks enterprise operations with Firebase phone authentication.
+
+## Features
+
+- **Firebase Phone Authentication**: Secure OTP-based login using Firebase Auth
+- **Redux State Management**: Centralized state management with Redux Toolkit
+- **Modern UI Components**: Built with shadcn/ui and Tailwind CSS
+- **TypeScript**: Full type safety throughout the application
+- **Responsive Design**: Mobile-friendly interface
+
+## Project Structure
+
+```
+src/
+├── api/                   # API management and services
+│   ├── ApiManager.ts      # High-level API methods
+│   ├── ApiMethods.ts      # Low-level HTTP methods
+│   └── endpoints.ts       # API endpoint definitions
+├── components/
+│   ├── auth/             # Authentication components
+│   │   ├── AdminLoginCard.tsx
+│   │   └── AdminPhoneAuthForm.tsx
+│   ├── providers/        # Context providers
+│   │   ├── AdminAuthProvider.tsx
+│   │   └── ReduxProvider.tsx
+│   └── ui/               # shadcn/ui components
+├── config/
+│   └── firebase.config.ts # Firebase configuration
+├── hooks/
+│   └── useAdminAuth.ts   # Admin authentication hook
+├── lib/
+│   └── utils.ts          # Utility functions
+├── redux/
+│   ├── slices/
+│   │   └── adminAuthSlice.ts # Admin auth Redux slice
+│   ├── hooks.ts          # Redux hooks
+│   └── store.ts          # Redux store configuration
+├── types/
+│   └── api.ts            # TypeScript type definitions
+└── app/                  # Next.js app directory
+```
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ 
+- npm or yarn
+- Firebase project with phone authentication enabled
+
+### Installation
+
+1. Clone the repository and navigate to the enterprise-console directory
+
+2. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Configure environment variables in `.env.local`:
+```
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api/
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. Update Firebase configuration in `src/config/firebase.config.ts` if needed
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Development
 
-## Learn More
+Run the development server:
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Build for production:
+```bash
+npm run build
+```
 
-## Deploy on Vercel
+Start production server:
+```bash
+npm start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Authentication Flow
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Phone Number Entry**: Admin enters their registered phone number
+2. **OTP Verification**: Firebase sends OTP via SMS
+3. **Backend Authentication**: OTP is verified and JWT token is issued
+4. **Session Management**: Admin session is maintained with secure cookies
+
+## API Integration
+
+The console integrates with your backend API for:
+
+- Admin authentication (`/admin/auth/authenticate`)
+- Profile management (`/admin/auth/profile`)
+- Session management (`/admin/auth/sessions`)
+- Activity logging (`/admin/auth/activity-logs`)
+
+## Security Features
+
+- Firebase phone authentication with reCAPTCHA
+- JWT token-based session management
+- Secure cookie storage
+- Role-based access control
+- Activity logging
+- Session timeout handling
+
+## Admin Roles
+
+- **SUPER_ADMIN**: Full system access
+- **ADMIN**: Standard admin access
+- **MANAGER**: Limited management access
+
+## Technologies Used
+
+- **Frontend**: Next.js 15, React 19
+- **Styling**: Tailwind CSS, shadcn/ui
+- **State Management**: Redux Toolkit
+- **Authentication**: Firebase Auth
+- **Language**: TypeScript
+- **Build Tool**: Next.js with Turbopack
+
+## Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `NEXT_PUBLIC_API_BASE_URL` | Backend API base URL | `http://localhost:8000/api/` |
+| `NEXT_PUBLIC_APP_NAME` | Application name | `RevoBricks Enterprise Console` |
+| `NEXT_PUBLIC_APP_VERSION` | Application version | `1.0.0` |
+
+## License
+
+© 2024 RevoBricks. All rights reserved.
