@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
@@ -25,7 +26,6 @@ import { fetchDevelopers, deleteDeveloper } from '../../redux/slices/developerSl
 import { formatDate, formatPhoneNumber, truncateText } from '../../lib/utils';
 import CreateDeveloperForm from './CreateDeveloperForm';
 import { RealEstateDeveloper } from '../../types/api';
-import { useRouter } from 'next/navigation';
 
 export default function DevelopersList() {
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -70,7 +70,7 @@ export default function DevelopersList() {
   };
 
   const handleViewDetails = (developerId: string) => {
-    router.push(`/dashboard/developers/${developerId}`);
+    router.push(`/dashboard/developer-details?id=${developerId}`);
   };
 
   const handleCreateSuccess = () => {
@@ -345,7 +345,8 @@ export default function DevelopersList() {
                   {filteredDevelopers.map((developer, index) => (
                     <TableRow 
                       key={developer.id} 
-                      className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors group"
+                      className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors group cursor-pointer"
+                      onClick={() => router.push(`/dashboard/developer-details?id=${developer.id}`)}
                     >
                       <TableCell className="py-4">
                         <div className="flex items-start space-x-3">

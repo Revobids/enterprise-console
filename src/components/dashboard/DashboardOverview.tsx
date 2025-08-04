@@ -294,7 +294,7 @@ export default function DashboardOverview() {
                   <div 
                     key={developer.id}
                     className="group flex items-center justify-between p-4 hover:bg-slate-50 rounded-xl cursor-pointer transition-all duration-200 border border-transparent hover:border-slate-200"
-                    onClick={() => router.push(`/dashboard/developers/${developer.id}`)}
+                    onClick={() => router.push(`/dashboard/developer-details?id=${developer.id}`)}
                   >
                     <div className="flex items-center space-x-4">
                       <div className="relative">

@@ -48,6 +48,12 @@ const sidebarItems = [
     icon: Building2,
     description: 'Manage real estate developers'
   },
+  {
+    name: 'Projects',
+    href: '/dashboard/projects',
+    icon: Activity,
+    description: 'Browse all development projects'
+  },
 ];
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
@@ -66,7 +72,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 flex">
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div 
@@ -77,13 +83,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
       {/* Sidebar */}
       <div className={`
-        fixed inset-y-0 left-0 z-50 w-72 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 shadow-2xl transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0
+        fixed inset-y-0 left-0 z-50 w-72 bg-slate-900 shadow-2xl transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:relative lg:flex lg:flex-col
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
         {/* Logo Section */}
         <div className="flex items-center justify-between h-20 px-6 border-b border-slate-700/50">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center shadow-lg">
+            <div className="w-10 h-10 bg-slate-700 rounded-xl flex items-center justify-center">
               <Shield className="h-6 w-6 text-white" />
             </div>
             <div>
@@ -113,7 +119,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                   className={`
                     group relative rounded-xl transition-all duration-200 cursor-pointer
                     ${isActive 
-                      ? 'bg-gradient-to-r from-blue-600/20 to-cyan-600/20 border border-blue-500/30' 
+                      ? 'bg-slate-800 border border-slate-600' 
                       : 'hover:bg-slate-800/50'
                     }
                   `}
@@ -126,7 +132,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                     <div className={`
                       p-2 rounded-lg transition-colors
                       ${isActive 
-                        ? 'bg-blue-500/20 text-blue-400' 
+                        ? 'bg-slate-700 text-white' 
                         : 'text-slate-400 group-hover:text-white group-hover:bg-slate-700'
                       }
                     `}>
@@ -136,13 +142,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                       <p className={`font-semibold ${isActive ? 'text-white' : 'text-slate-300 group-hover:text-white'}`}>
                         {item.name}
                       </p>
-                      <p className={`text-xs ${isActive ? 'text-blue-300' : 'text-slate-500 group-hover:text-slate-400'}`}>
+                      <p className={`text-xs ${isActive ? 'text-slate-300' : 'text-slate-500 group-hover:text-slate-400'}`}>
                         {item.description}
                       </p>
                     </div>
                   </div>
                   {isActive && (
-                    <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-blue-400 to-cyan-400 rounded-l-full" />
+                    <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-1 h-8 bg-white rounded-l-full" />
                   )}
                 </div>
               );
@@ -166,7 +172,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       </div>
 
       {/* Main content */}
-      <div className="lg:pl-72">
+      <div className="flex-1 flex flex-col min-w-0">
         {/* Top bar */}
         <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-sm shadow-sm border-b border-slate-200">
           <div className="flex items-center justify-between h-16 px-6">
@@ -252,7 +258,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         </div>
 
         {/* Main content area */}
-        <main className="p-8 bg-slate-50 min-h-screen">
+        <main className="flex-1 p-8 bg-slate-50 overflow-auto">
           <div className="max-w-7xl mx-auto">
             {children}
           </div>
